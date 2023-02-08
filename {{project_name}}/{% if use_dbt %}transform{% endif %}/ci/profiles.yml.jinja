@@ -3,13 +3,21 @@ config:
   use_colors: true
   warn_error: true
 
+{% if dbt_target == 'BigQuery' %}
 default:
   target: dev
   outputs:
     dev:
       type: bigquery
       method: oauth
+{% raw %}
       project: "{{ env_var('GCP_PROJECT') }}"
+{% endraw %}
       # Should not be created in CI as the CI service account is read-only!
       dataset: dbt_ci_should_not_create_this_dataset
       threads: 4
+{% elif dbt_target == 'Snowflake' %}
+
+{{ 0/0 }}  # Intentionally error until we implement Snowflake
+
+{% endif %}

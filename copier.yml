@@ -1,3 +1,7 @@
+_envops:
+    lstrip_blocks: true
+    trim_blocks: true
+
 # Questions
 project_name:
   type: str
