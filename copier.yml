@@ -17,15 +17,23 @@ team_name:
     What is your team name? This can include mixed-case text and spaces.
 
 use_dbt:
-  type: str
+  type: bool
+  default: true
   help: |
     dbt is a tool for defining and executing data transformations within
     a cloud data warehouse like Snowflake or BigQuery. Will your project
     be making use of dbt?
 
-use_airflow:
-  type: str
+dbt_target:
+  choices:
+    - BigQuery
+    - Snowflake
+  default: BigQuery
+
+use_orchestrator:
+  type: bool
+  default: false
   help: |
     Airflow is a tool for orchestrating general workflows on a schedule
     (e.g., loading data into your data warehouse, or generating a report).
-    Will your project be making use of airflow?
+    Will your project be making use of Airflow?
