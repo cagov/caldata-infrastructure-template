@@ -3,17 +3,18 @@ _envops:
     trim_blocks: true
 
 # Questions
-project_name:
-  type: str
-  help: |
-    What is your project name? This should be all lower-case and not include
-    any spaces, e.g. `my-excellent-project`.
-
 friendly_project_name:
   type: str
   help: |
     What is the human-readable project name? This can be mixed-case and include
     spaces, and will be used for things like documentation.
+
+project_name:
+  type: str
+  default: '{{ friendly_project_name | lower | replace(" ", "-") }}'
+  help: |
+    What is the project name? This should be all lower-case and not include
+    any spaces, e.g. `my-excellent-project`.
 
 team_name:
   type: str
