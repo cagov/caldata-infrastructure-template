@@ -1,6 +1,13 @@
 *.swp
 composer/
 
+{% if use_dbt %}
+# dbt stuff
+transform/target/
+transform/dbt_packages/
+transform/logs
+{% endif %}
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
