@@ -12,6 +12,7 @@ copier \
     --data project_name=$PROJECT_NAME \
     --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
     --data team_name="$TEAM_NAME" \
+    --data license=MIT \
     --data use_dbt=true \
     --data dbt_target=BigQuery \
     --data use_orchestrator=false \

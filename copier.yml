@@ -12,6 +12,7 @@ _exclude:
   - ".svn"
   - "/ci"
   - "/.github"
+  - "/LICENCE"
 
 # Questions
 friendly_project_name:
@@ -31,6 +32,13 @@ team_name:
   type: str
   help: |
     What is your team name? This can include mixed-case text and spaces.
+
+license:
+  default: MIT
+  choices:
+    - MIT
+    - Apache 2.0
+    - BSD 3-Clause
 
 use_dbt:
   type: bool
