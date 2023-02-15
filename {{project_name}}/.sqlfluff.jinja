@@ -1,14 +1,18 @@
 [sqlfluff]
-dialect = bigquery
+{% if use_dbt %}
 templater = dbt
+dialect = {{ dbt_target | lower }}
+{% endif %}
 
 # Disable some format rules while we are using sqlfmt (which is what
 # dbt cloud integrates) to maintain consistency. If dbt cloud ever
 # drops sqlfmt for a more unified experience, let's revisit this.
 exclude_rules = L003, L018, L034, L036
 
+{% if use_dbt %}
 [sqlfluff:templater:dbt]
 project_dir = transform
+{% endif %}
 
 [sqlfluff:rules]
 max_line_length=88
