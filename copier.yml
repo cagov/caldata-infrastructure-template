@@ -10,7 +10,8 @@ _exclude:
   - ".git"
   - ".DS_Store"
   - ".svn"
-  - "ci"
+  - "/ci"
+  - "/.github"
 
 # Questions
 friendly_project_name:

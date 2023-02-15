@@ -1,0 +1,38 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: caldata-infrastructure-template
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          # The credentials here can read metadata only, which makes them
+          # good enough for `dbt compile`. It really shouldn't be necessary
+          # to have a live connection to compile the sample model, but unfortunately
+          # dbt seems to require it.
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+      - uses: actions/setup-python@v3
+      - name: Install Conda environment with Micromamba
+        uses: mamba-org/provision-with-micromamba@v15
+        with:
+          environment-file: caldata-infrastructure-template/ci/environment.yml
+      - name: Setup git
+        run: |
+          git config --global user.email "nobody@example.com"
+          git config --global user.name "CI bot"
+      - name: Test template
+        run: ./caldata-infrastructure-template/ci/test.sh

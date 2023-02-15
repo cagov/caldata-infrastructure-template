@@ -5,6 +5,7 @@ set -euxo pipefail
 TEAM_NAME="Test team"
 FRIENDLY_PROJECT_NAME="Sample Project"
 PROJECT_NAME="sample-project"
+DBT_PROFILES_DIR="transform/ci"
 
 # Run copier. TODO: parametrize over some different configurations
 copier \
@@ -26,8 +27,8 @@ git commit -m "Initial commit"
 
 # Create dbt manifest
 if [ -d "transform" ]; then
-    dbt compile --project-dir=transform
+    dbt compile --project-dir=transform --profiles-dir=$DBT_PROFILES_DIR
 fi
 
 # Run quality checks
-pre-commit run --all-files
+DBT_PROFILES_DIR=$DBT_PROFILES_DIR pre-commit run --all-files
