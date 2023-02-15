@@ -1,6 +1,16 @@
 _envops:
     lstrip_blocks: true
     trim_blocks: true
+_exclude:
+  - "copier.yaml"
+  - "copier.yml"
+  - "~*"
+  - "*.py[co]"
+  - "__pycache__"
+  - ".git"
+  - ".DS_Store"
+  - ".svn"
+  - "ci"
 
 # Questions
 friendly_project_name:
