@@ -45,14 +45,20 @@ repos:
       # There are a ton of checks in this repo, these are the ones that
       # seemed most immediately useful.
       # https://github.com/dbt-checkpoint/dbt-checkpoint/blob/main/HOOKS.md
+      # A few depend on metadata from the warehouse. Those can be useful,
+      # but are not included right now to avoid needing the initial template
+      # generation requiring data to have been generated.
       - id: check-model-columns-have-desc
+        args: ["--manifest", "transform/target/manifest.json", "--"]
       - id: check-model-has-description
+        args: ["--manifest", "transform/target/manifest.json", "--"]
       - id: check-model-has-properties-file
+        args: ["--manifest", "transform/target/manifest.json", "--"]
       - id: check-script-ref-and-source
-      - id: check-script-has-no-table-name
+        args: ["--manifest", "transform/target/manifest.json", "--"]
       - id: check-source-columns-have-desc
       - id: check-macro-has-description
+        args: ["--manifest", "transform/target/manifest.json", "--"]
       - id: check-macro-arguments-have-desc
-      - id: check-model-has-all-columns
-      - id: check-source-has-all-columns
+        args: ["--manifest", "transform/target/manifest.json", "--"]
       - id: check-source-table-has-description

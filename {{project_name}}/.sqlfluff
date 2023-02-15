@@ -7,6 +7,9 @@ templater = dbt
 # drops sqlfmt for a more unified experience, let's revisit this.
 exclude_rules = L003, L018, L034, L036
 
+[sqlfluff:templater:dbt]
+project_dir = transform
+
 [sqlfluff:rules]
 max_line_length=88
 

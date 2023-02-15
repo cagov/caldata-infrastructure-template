@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: sample
+    description: A sample model
+    columns:
+      - name: id
+        description: An integer id
+        tests:
+          - not_null
+      - name: date
+        description: A date column
+        tests:
+          - not_null
+      - name: value
+        description: A unique value
+        tests:
+          - not_null
+          - unique
