@@ -19,9 +19,15 @@ First, create a Python virtual environment
 (this could be a `conda` environment or a native Python one)
 A local install of this repository requires:
 
+{% if dbt_target == 'BigQuery' %}
 * `dbt-core`
 * `dbt-bigquery`
 * `pre-commit`
+{% elif dbt_target == 'Snowflake' %}
+* `dbt-core`
+* `dbt-snowflake`
+* `pre-commit`
+{% endif %}
 
 A minimal setup using `conda` could be:
 
