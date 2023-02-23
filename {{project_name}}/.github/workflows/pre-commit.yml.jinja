@@ -42,8 +42,8 @@ jobs:
       - name: Build manifest and catalog
         env:
           DBT_PROFILES_DIR: transform/ci
-{% endif %}
         run: dbt deps && dbt compile
+{% endif %}
       - uses: pre-commit/action@v3.0.0
 {% if use_dbt %}
         env:
