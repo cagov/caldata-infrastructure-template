@@ -22,7 +22,15 @@ Create a new project using the copier command-line tool:
 copier copy https://github.com/cagov/caldata-infrastructure-template .
 ```
 
-This will ask you a series of questions, the answers to which will be used to populate th project.
+This will ask you a series of questions, the answers to which will be used to populate the project.
+
+Once the project is rendered, you should initialize it as a git repository:
+
+```bash
+cd <your-project-name>
+git add .
+git commit -m "Initial commit"
+```
 
 ### BigQuery setup
 
