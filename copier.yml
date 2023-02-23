@@ -24,10 +24,10 @@ friendly_project_name:
 
 project_name:
   type: str
-  default: '{{ friendly_project_name | lower | replace(" ", "-") }}'
+  default: "{{ friendly_project_name | trim | lower | replace(' ', '-') | replace('\\'', '') }}"
   help: |
     What is the project name? This should be all lower-case and not include
-    any spaces, e.g. `my-excellent-project`.
+    any spaces or special characters (except "-" and "_"), e.g. `my-excellent-project`.
 
 team_name:
   type: str
@@ -40,6 +40,10 @@ license:
     - MIT
     - Apache 2.0
     - BSD 3-Clause
+  help: |
+    What software license would you like to use? For more information about the options,
+    please refer to https://choosealicense.com/. If you would like a license not on this
+    list, you can always delete it and substitute your own.
 
 use_dbt:
   type: bool
@@ -50,10 +54,13 @@ use_dbt:
     be making use of dbt?
 
 dbt_target:
+  when: '{% if use_dbt %}true{% else %}false{% endif %}'
   choices:
     - BigQuery
     - Snowflake
   default: BigQuery
+  help: |
+    What data warehouse will you be using with dbt?
 
 use_orchestrator:
   type: bool
