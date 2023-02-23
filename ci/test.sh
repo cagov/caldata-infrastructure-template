@@ -25,10 +25,5 @@ git init
 git add .
 git commit -m "Initial commit"
 
-# Create dbt manifest
-if [ -d "transform" ]; then
-    dbt compile --project-dir=transform
-fi
-
 # Run quality checks
 pre-commit run --all-files
