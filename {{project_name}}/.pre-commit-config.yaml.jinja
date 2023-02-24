@@ -41,8 +41,12 @@ repos:
     # Last tagged release is old and unsupported, but the most recent refs
     # have some broken fixes from Datacoves... This is just a known
     # fair-to-decent commit.
-    rev: 9097e05
+    rev: c60edfd
     hooks:
+      - id: dbt-deps
+        args: ["--cmd-flags", "++project-dir", "transform"]
+      - id: dbt-compile
+        args: ["--cmd-flags", "++project-dir", "transform", "--"]
       # There are a ton of checks in this repo, these are the ones that
       # seemed most immediately useful.
       # https://github.com/dbt-checkpoint/dbt-checkpoint/blob/main/HOOKS.md

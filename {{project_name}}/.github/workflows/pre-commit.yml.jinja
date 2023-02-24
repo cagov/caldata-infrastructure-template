@@ -39,10 +39,6 @@ jobs:
         uses: mamba-org/provision-with-micromamba@v15
         with:
           environment-file: transform/ci/environment.yml
-      - name: Build manifest and catalog
-        env:
-          DBT_PROFILES_DIR: transform/ci
-        run: dbt deps && dbt compile
 {% endif %}
       - uses: pre-commit/action@v3.0.0
 {% if use_dbt %}
