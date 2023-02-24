@@ -12,7 +12,7 @@ _exclude:
   - ".svn"
   - "/ci"
   - "/.github"
-  - "/LICENCE"
+  - "/LICENSE"
   - "/README.md"
 
 # Questions
