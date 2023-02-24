@@ -18,12 +18,14 @@ _exclude:
 # Questions
 friendly_project_name:
   type: str
+  validator: "{% if not friendly_project_name %}Must provide a name{% endif %}"
   help: |
     What is the human-readable project name? This can be mixed-case and include
     spaces, and will be used for things like documentation.
 
 project_name:
   type: str
+  validator: "{% if not project_name %}Must provide a name{% endif %}"
   default: "{{ friendly_project_name | trim | lower | replace(' ', '-') | replace('\\'', '') }}"
   help: |
     What is the project name? This should be all lower-case and not include
@@ -31,6 +33,7 @@ project_name:
 
 team_name:
   type: str
+  validator: "{% if not team_name %}Must provide a team name{% endif %}"
   help: |
     What is your team name? This can include mixed-case text and spaces.
 
