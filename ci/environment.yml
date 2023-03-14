@@ -3,6 +3,6 @@ channels:
   - conda-forge
 dependencies:
   - dbt-core~=1.4
-  - dbt-bigquery=~1.4
+  - dbt-bigquery~=1.4
   - pre-commit
   - copier
