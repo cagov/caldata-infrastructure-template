@@ -16,10 +16,13 @@ Start with a Python environment. Install `copier`:
 python -m pip install copier
 ```
 
-Create a new project using the copier command-line tool:
-
+Create a new project using the copier command-line tool, with HTTPS:
 ```bash
 copier copy https://github.com/cagov/caldata-infrastructure-template .
+```
+OR with SSH:
+```bash
+copier copy git@github.com:cagov/caldata-infrastructure-template.git .
 ```
 
 This will ask you a series of questions, the answers to which will be used to populate the project.
