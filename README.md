@@ -1,6 +1,6 @@
 # CalData Infrastructure Template
 
-![test](https://github.com/cagov/caldata-infrastructure-template/actions/workflows/test.yml/badge.svg?branch=add-docs-project)
+![test](https://github.com/cagov/caldata-infrastructure-template/actions/workflows/test.yml/badge.svg?branch=main)
 
 This repository is a [copier](https://copier.readthedocs.io/en/stable/) template
 which can be used to quickly seed a modern data stack project.
