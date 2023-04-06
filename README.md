@@ -1,12 +1,14 @@
 # CalData Infrastructure Template
 
+![test](https://github.com/cagov/caldata-infrastructure-template/actions/workflows/test.yml/badge.svg?branch=main)
+
 This repository is a [copier](https://copier.readthedocs.io/en/stable/) template
 which can be used to quickly seed a modern data stack project.
 It consists of:
 
 1. A [dbt](https://docs.getdbt.com/) project.
 1. [pre-commit](https://pre-commit.com/) checks for enforcing code-quality.
-1. A documentation skeleton using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
+1. A [documentation skeleton](https://cagov.github.io/caldata-infrastructure-template) using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
 1. GitHub actions for running quality checks in continuous integration (CI)
 
 ## Usage

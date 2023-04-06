@@ -3,7 +3,11 @@ name: test
 on:
   pull_request:
   push:
-    branches: [main]
+    branches:
+      - main
+      - add-docs-project
+permissions:
+  contents: write
 
 defaults:
   run:
@@ -38,3 +42,6 @@ jobs:
         env:
           DBT_PROFILES_DIR: transform/ci
         run: ./caldata-infrastructure-template/ci/test.sh
+      - name: Deploy docs skeleton
+        if: github.ref == 'refs/heads/main'
+        run: cd sample-project && mkdocs gh-deploy --force
