@@ -6,6 +6,7 @@ It consists of:
 
 1. A [dbt](https://docs.getdbt.com/) project.
 1. [pre-commit](https://pre-commit.com/) checks for enforcing code-quality.
+1. A documentation skeleton using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
 1. GitHub actions for running quality checks in continuous integration (CI)
 
 ## Usage
@@ -31,6 +32,7 @@ Once the project is rendered, you should initialize it as a git repository:
 
 ```bash
 cd <your-project-name>
+git init
 git add .
 git commit -m "Initial commit"
 ```
