@@ -32,7 +32,6 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Setup git
         run: |
-          git remote -v
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
       - name: Install Conda environment with Micromamba
@@ -43,11 +42,3 @@ jobs:
         env:
           DBT_PROFILES_DIR: transform/ci
         run: ./caldata-infrastructure-template/ci/test.sh
-      - name: Deploy docs skeleton
-        if: github.ref == 'refs/heads/add-docs-project'
-        env:
-          REMOTE: ${{ github.server_url }}/${{ github.repository }}.git
-        run: |
-          cd sample-project
-          git remote add origin $REMOTE
-          mkdocs gh-deploy --force
