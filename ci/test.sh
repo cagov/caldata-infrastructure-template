@@ -27,3 +27,6 @@ git commit -m "Initial commit"
 
 # Run quality checks
 pre-commit run --all-files
+
+# Verify that the docs build
+mkdocs build

@@ -3,7 +3,10 @@ name: test
 on:
   pull_request:
   push:
-    branches: [main]
+    branches:
+      - main
+permissions:
+  contents: write
 
 defaults:
   run:
@@ -26,14 +29,14 @@ jobs:
           # dbt seems to require it.
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
       - uses: actions/setup-python@v3
+      - name: Setup git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
       - name: Install Conda environment with Micromamba
         uses: mamba-org/provision-with-micromamba@v15
         with:
           environment-file: caldata-infrastructure-template/ci/environment.yml
-      - name: Setup git
-        run: |
-          git config --global user.email "nobody@example.com"
-          git config --global user.name "CI bot"
       - name: Test template
         env:
           DBT_PROFILES_DIR: transform/ci
