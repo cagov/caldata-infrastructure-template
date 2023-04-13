@@ -29,4 +29,7 @@ git commit -m "Initial commit"
 pre-commit run --all-files
 
 # Verify that the docs build
+dbt deps --project-dir=transform
+dbt docs generate --project-dir=transform
+cp -r transform/target docs/dbt_docs
 mkdocs build
