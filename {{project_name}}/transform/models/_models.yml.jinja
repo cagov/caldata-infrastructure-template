@@ -3,6 +3,7 @@ version: 2
 models:
   - name: sample
     description: A sample model
+{% if dbt_target == 'BigQuery' %}
     columns:
       - name: id
         description: An integer id
@@ -17,3 +18,14 @@ models:
         tests:
           - not_null
           - unique
+{% elif dbt_target == 'Snowflake' %}
+    columns:
+      - name: name
+        description: A person's name
+      - name: city
+        description: Their residence
+      - name: license_plate
+        description: Their license plate
+      - name: email
+        description: Their email
+{% endif %}
