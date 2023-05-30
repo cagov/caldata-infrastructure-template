@@ -12,9 +12,10 @@ env:
 {% if dbt_target == 'Snowflake' %}
 {% raw %}
   PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
+  SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER }}
+  SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 {% endraw %}
   SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/private_key.p8
-  SNOWFLAKE_USER: GITHUB_ACTIONS_SVC_USER_DEV
 {% endif %}
 
 jobs:
