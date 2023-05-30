@@ -15,10 +15,6 @@ env:
   SNOWFLAKE_USER: GITHUB_ACTIONS_SVC_USER_DEV
 {% endif %}
 
-jobs:
-  pre-commit:
-    runs-on: ubuntu-latest
-    steps:
 defaults:
   run:
     shell: bash -l {0}
@@ -28,7 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-{% if use_dbt %}
 {% if dbt_target == 'BigQuery' %}
       - id: auth
         name: Authenticate to Google Cloud
@@ -55,9 +50,4 @@ jobs:
         uses: mamba-org/provision-with-micromamba@v15
         with:
           environment-file: transform/ci/environment.yml
-{% endif %}
       - uses: pre-commit/action@v3.0.0
-{% if use_dbt %}
-        env:
-          DBT_PROFILES_DIR: transform/ci
-{% endif %}

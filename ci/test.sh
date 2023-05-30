@@ -4,7 +4,9 @@ set -euxo pipefail
 
 TEAM_NAME="Test team"
 FRIENDLY_PROJECT_NAME="Sample Project"
-PROJECT_NAME="sample-project"
+BQ_PROJECT_NAME="bigquery-sample-project"
+SNOWFLAKE_PROJECT_NAME="snowflake-sample-project"
+PROJECT_NAME=$SNOWFLAKE_PROJECT_NAME
 
 # Run copier. TODO: parametrize over some different configurations
 copier \
@@ -12,8 +14,7 @@ copier \
     --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
     --data team_name="$TEAM_NAME" \
     --data license=MIT \
-    --data use_dbt=true \
-    --data dbt_target=BigQuery \
+    --data dbt_target=Snowflake \
     --data use_orchestrator=false \
     caldata-infrastructure-template/ . 
 
