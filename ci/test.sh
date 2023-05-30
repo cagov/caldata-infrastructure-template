@@ -15,7 +15,6 @@ for TARGET in Snowflake BigQuery; do
         --data team_name="$TEAM_NAME" \
         --data license=MIT \
         --data dbt_target=$TARGET \
-        --data use_orchestrator=false \
         caldata-infrastructure-template/ . 
 
     # Enter the new project

@@ -55,11 +55,3 @@ dbt_target:
   default: BigQuery
   help: |
     What data warehouse will you be using with dbt?
-
-use_orchestrator:
-  type: bool
-  default: false
-  help: |
-    Airflow is a tool for orchestrating general workflows on a schedule
-    (e.g., loading data into your data warehouse, or generating a report).
-    Will your project be making use of Airflow?
