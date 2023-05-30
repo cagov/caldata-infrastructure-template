@@ -8,6 +8,13 @@ on:
 permissions:
   contents: write
 
+env:
+  DBT_PROFILES_DIR: transform/ci
+  PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
+  SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER }}
+  SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/private_key.p8
+
 defaults:
   run:
     shell: bash -l {0}
@@ -37,7 +44,9 @@ jobs:
         uses: mamba-org/provision-with-micromamba@v15
         with:
           environment-file: caldata-infrastructure-template/ci/environment.yml
+        # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
+        # just use $SNOWFLAKE_PRIVATE_KEY
+      - name: Set up private key
+        run: echo "$PRIVATE_KEY" > $SNOWFLAKE_PRIVATE_KEY_PATH
       - name: Test template
-        env:
-          DBT_PROFILES_DIR: transform/ci
         run: ./caldata-infrastructure-template/ci/test.sh
