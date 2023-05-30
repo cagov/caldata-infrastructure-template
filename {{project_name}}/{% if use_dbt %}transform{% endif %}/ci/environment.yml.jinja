@@ -2,9 +2,9 @@ name: ci
 channels:
   - conda-forge
 dependencies:
-{% if dbt_target == 'BigQuery' %}
   - dbt-core~=1.4
-  - dbt-bigquery=1.4
+{% if dbt_target == 'BigQuery' %}
+  - dbt-bigquery_=1.4
 {% elif dbt_target == 'Snowflake' %}
-{{ 0/0 }}  # Intentionally error until we implement Snowflake
+  - dbt-snowflake_=1.4
 {% endif %}

@@ -3,8 +3,20 @@ on:
   push:
     branches:
       - main
+
 permissions:
   contents: write
+
+env:
+  DBT_PROFILES_DIR: transform/ci
+{% if dbt_target == 'Snowflake' %}
+{% raw %}
+  PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
+{% endraw %}
+  SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/private_key.p8
+  SNOWFLAKE_USER: GITHUB_ACTIONS_SVC_USER_DEV
+{% endif %}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -30,7 +42,10 @@ jobs:
 {% endraw %}
           export_environment_variables: true
 {% elif dbt_target == 'Snowflake' %}
-{{ 0/0 }}  # Intentionally error until we implement Snowflake
+        # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
+        # just use $SNOWFLAKE_PRIVATE_KEY
+      - name: Set up private key
+        run: echo "$PRIVATE_KEY" > $SNOWFLAKE_PRIVATE_KEY_PATH
 {% endif %}
 {% endif %}
       - uses: actions/cache@v2
