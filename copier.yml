@@ -48,27 +48,10 @@ license:
     please refer to https://choosealicense.com/. If you would like a license not on this
     list, you can always delete it and substitute your own.
 
-use_dbt:
-  type: bool
-  default: true
-  help: |
-    dbt is a tool for defining and executing data transformations within
-    a cloud data warehouse like Snowflake or BigQuery. Will your project
-    be making use of dbt?
-
 dbt_target:
-  when: '{% if use_dbt %}true{% else %}false{% endif %}'
   choices:
     - BigQuery
     - Snowflake
   default: BigQuery
   help: |
     What data warehouse will you be using with dbt?
-
-use_orchestrator:
-  type: bool
-  default: false
-  help: |
-    Airflow is a tool for orchestrating general workflows on a schedule
-    (e.g., loading data into your data warehouse, or generating a report).
-    Will your project be making use of Airflow?

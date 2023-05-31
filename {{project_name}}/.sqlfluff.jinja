@@ -1,8 +1,6 @@
 [sqlfluff]
-{% if use_dbt %}
 templater = dbt
 dialect = {{ dbt_target | lower }}
-{% endif %}
 max_line_length = 88
 
 # Disable some format rules while we are using sqlfmt (which is what
@@ -13,10 +11,8 @@ exclude_rules = layout.indent,
                 structure.column_order,
                 layout.select_targets
 
-{% if use_dbt %}
 [sqlfluff:templater:dbt]
 project_dir = transform
-{% endif %}
 
 # Probably a controversial exclusion, so adding some justification here:
 # This disables the rule that prevents unreserved keywords from being

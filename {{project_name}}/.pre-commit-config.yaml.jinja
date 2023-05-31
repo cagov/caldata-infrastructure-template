@@ -10,7 +10,6 @@ repos:
       - id: check-json
       - id: end-of-file-fixer
       - id: trailing-whitespace
-{% if use_dbt %}
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
     hooks:
@@ -27,16 +26,28 @@ repos:
       - id: sqlfmt
         language_version: python
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 2.0.0
+    rev: 2.0.3
     hooks:
+{% if dbt_target == 'BigQuery' %}
       - id: sqlfluff-lint
         additional_dependencies:
           - dbt-bigquery==1.4.2
-          - sqlfluff-templater-dbt==2.0.0
+          - sqlfluff-templater-dbt==2.0.3
           - dbt-core==1.4.5
       - id: sqlfluff-fix
         additional_dependencies:
           - dbt-bigquery==1.4.2
-          - sqlfluff-templater-dbt==2.0.0
+          - sqlfluff-templater-dbt==2.0.3
+          - dbt-core==1.4.5
+{% elif dbt_target == 'Snowflake' %}
+      - id: sqlfluff-lint
+        additional_dependencies:
+          - dbt-snowflake==1.4.2
+          - sqlfluff-templater-dbt==2.0.3
+          - dbt-core==1.4.5
+      - id: sqlfluff-fix
+        additional_dependencies:
+          - dbt-snowflake==1.4.2
+          - sqlfluff-templater-dbt==2.0.3
           - dbt-core==1.4.5
 {% endif %}

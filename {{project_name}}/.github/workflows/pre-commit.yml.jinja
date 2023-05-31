@@ -5,6 +5,17 @@ on:
   push:
     branches: [main]
 
+env:
+  DBT_PROFILES_DIR: transform/ci
+{% if dbt_target == 'Snowflake' %}
+{% raw %}
+  PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
+  SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER }}
+  SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
+{% endraw %}
+  SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/private_key.p8
+{% endif %}
+
 defaults:
   run:
     shell: bash -l {0}
@@ -14,7 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-{% if use_dbt %}
 {% if dbt_target == 'BigQuery' %}
       - id: auth
         name: Authenticate to Google Cloud
@@ -31,16 +41,14 @@ jobs:
 {% endraw %}
           export_environment_variables: true
 {% elif dbt_target == 'Snowflake' %}
-{{ 0/0 }}  # Intentionally error until we implement Snowflake
+        # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
+        # just use $SNOWFLAKE_PRIVATE_KEY
+      - name: Set up private key
+        run: echo "$PRIVATE_KEY" > $SNOWFLAKE_PRIVATE_KEY_PATH
 {% endif %}
       - uses: actions/setup-python@v3
       - name: Install Conda environment with Micromamba
         uses: mamba-org/provision-with-micromamba@v15
         with:
           environment-file: transform/ci/environment.yml
-{% endif %}
       - uses: pre-commit/action@v3.0.0
-{% if use_dbt %}
-        env:
-          DBT_PROFILES_DIR: transform/ci
-{% endif %}

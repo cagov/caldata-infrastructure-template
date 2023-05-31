@@ -6,30 +6,33 @@ TEAM_NAME="Test team"
 FRIENDLY_PROJECT_NAME="Sample Project"
 PROJECT_NAME="sample-project"
 
-# Run copier. TODO: parametrize over some different configurations
-copier \
-    --data project_name=$PROJECT_NAME \
-    --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
-    --data team_name="$TEAM_NAME" \
-    --data license=MIT \
-    --data use_dbt=true \
-    --data dbt_target=BigQuery \
-    --data use_orchestrator=false \
-    caldata-infrastructure-template/ . 
+# Run copier.
+for TARGET in Snowflake BigQuery; do
+    DIRECTORY=${PROJECT_NAME}-${TARGET}
+    copier \
+        --data project_name=$DIRECTORY \
+        --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
+        --data team_name="$TEAM_NAME" \
+        --data license=MIT \
+        --data dbt_target=$TARGET \
+        caldata-infrastructure-template/ . 
 
-# Enter the new project
-pushd $PROJECT_NAME
+    # Enter the new project
+    pushd $DIRECTORY
 
-# Initialize git
-git init
-git add .
-git commit -m "Initial commit"
+    # Initialize git
+    git init
+    git add .
+    git commit -m "Initial commit"
 
-# Run quality checks
-pre-commit run --all-files
+    # Run quality checks
+    pre-commit run --all-files
 
-# Verify that the docs build
-dbt deps --project-dir=transform
-dbt docs generate --project-dir=transform
-cp -r transform/target docs/dbt_docs
-mkdocs build
+    # Verify that the docs build
+    dbt deps --project-dir=transform
+    dbt docs generate --project-dir=transform
+    cp -r transform/target docs/dbt_docs
+    mkdocs build
+
+    popd
+done
