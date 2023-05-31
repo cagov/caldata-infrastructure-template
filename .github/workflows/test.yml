@@ -46,6 +46,7 @@ jobs:
       - name: Install dependencies 
         run: |
           pip install copier poetry
+          poetry config virtualenvs.create false
         # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
         # just use $SNOWFLAKE_PRIVATE_KEY
       - name: Set up private key
