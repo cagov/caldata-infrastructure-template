@@ -25,6 +25,9 @@ for TARGET in Snowflake BigQuery; do
     git add .
     git commit -m "Initial commit"
 
+    # Install the dependencies
+    poetry install
+
     # Run quality checks
     pre-commit run --all-files
 

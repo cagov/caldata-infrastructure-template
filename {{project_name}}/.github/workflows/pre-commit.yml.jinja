@@ -47,8 +47,4 @@ jobs:
         run: echo "$PRIVATE_KEY" > $SNOWFLAKE_PRIVATE_KEY_PATH
 {% endif %}
       - uses: actions/setup-python@v3
-      - name: Install Conda environment with Micromamba
-        uses: mamba-org/provision-with-micromamba@v15
-        with:
-          environment-file: transform/ci/environment.yml
       - uses: pre-commit/action@v3.0.0
