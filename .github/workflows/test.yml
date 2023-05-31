@@ -26,6 +26,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           path: caldata-infrastructure-template
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
@@ -40,10 +43,10 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-      - name: Install Conda environment with Micromamba
-        uses: mamba-org/provision-with-micromamba@v15
-        with:
-          environment-file: caldata-infrastructure-template/ci/environment.yml
+      - name: Install dependencies 
+        run: |
+          pip install copier poetry
+          poetry config virtualenvs.create false
         # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
         # just use $SNOWFLAKE_PRIVATE_KEY
       - name: Set up private key

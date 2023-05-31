@@ -52,10 +52,12 @@ jobs:
           key: {% raw %}${{ github.ref }}
 {% endraw %}
           path: .cache
+      - uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
       - name: Install dependencies
         run: |
-          pip install mkdocs-material
-          pip install -r transform/requirements.txt
+          poetry install
       - name: Build dbt docs
         run: |
           dbt deps --project-dir=transform

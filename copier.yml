@@ -37,6 +37,12 @@ team_name:
   help: |
     What is your team name? This can include mixed-case text and spaces.
 
+email_address:
+  type: str
+  help: |
+    What is a good contact email for the team? (Note, this is just for project
+    metadata, there is no spam we'll direct to the email)
+
 license:
   default: MIT
   choices:
