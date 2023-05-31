@@ -13,6 +13,7 @@ for TARGET in Snowflake BigQuery; do
         --data project_name=$DIRECTORY \
         --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
         --data team_name="$TEAM_NAME" \
+        --data email_address="test@test.com" \
         --data license=MIT \
         --data dbt_target=$TARGET \
         caldata-infrastructure-template/ . 
