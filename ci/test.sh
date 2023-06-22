@@ -9,7 +9,7 @@ PROJECT_NAME="sample-project"
 # Run copier.
 for TARGET in Snowflake BigQuery; do
     DIRECTORY=${PROJECT_NAME}-${TARGET}
-    copier \
+    copier copy \
         --data project_name=$DIRECTORY \
         --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
         --data team_name="$TEAM_NAME" \
