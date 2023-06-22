@@ -33,8 +33,11 @@ for TARGET in Snowflake BigQuery; do
     pre-commit run --all-files
 
     # Verify that the docs build
-    dbt deps --project-dir=transform
-    dbt docs generate --project-dir=transform
+    pushd transform
+    dbt deps
+    dbt docs generate
+    popd
+
     cp -r transform/target docs/dbt_docs
     mkdocs build
 
