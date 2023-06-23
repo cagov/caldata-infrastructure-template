@@ -9,7 +9,7 @@ PROJECT_NAME="sample-project"
 # Run copier.
 for TARGET in Snowflake BigQuery; do
     DIRECTORY=${PROJECT_NAME}-${TARGET}
-    copier \
+    copier copy \
         --data project_name=$DIRECTORY \
         --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
         --data team_name="$TEAM_NAME" \
@@ -33,8 +33,11 @@ for TARGET in Snowflake BigQuery; do
     pre-commit run --all-files
 
     # Verify that the docs build
-    dbt deps --project-dir=transform
-    dbt docs generate --project-dir=transform
+    pushd transform
+    dbt deps
+    dbt docs generate
+    popd
+
     cp -r transform/target docs/dbt_docs
     mkdocs build
 
