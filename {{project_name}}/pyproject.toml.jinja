@@ -15,8 +15,11 @@ dbt-bigquery = "~1.6.0"
 {% elif dbt_target == 'Snowflake' %}
 dbt-snowflake = "~1.6.0"
 {% endif %}
-pre-commit = "^3.3.1"
 
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.1"
+sqlfluff = "2.3.0"
+sqlfluff-templater-dbt = "2.3.0"
 
 [build-system]
 requires = ["poetry-core"]
