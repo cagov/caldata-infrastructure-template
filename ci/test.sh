@@ -27,7 +27,7 @@ for TARGET in Snowflake BigQuery; do
     git commit -m "Initial commit"
 
     # Install the dependencies
-    poetry install
+    poetry install --with dev
 
     # Run quality checks
     pre-commit run --all-files
