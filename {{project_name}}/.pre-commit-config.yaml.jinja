@@ -28,7 +28,7 @@ repos:
   #   2. Some machines (such as ODI Macs) seem to struggle with sqlfluff's
   #      multiprocessing implementation, so we force it to be single-process.
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 2.0.3
+    rev: 2.3.0
     hooks:
 {% if dbt_target == 'BigQuery' %}
       - id: sqlfluff-fix
@@ -36,16 +36,16 @@ repos:
           bash -c 'cd transform && sqlfluff fix --force --disable-progress-bar
           --show-lint-violations --nocolor --processes 1'
         additional_dependencies:
-          - dbt-bigquery==1.4.2
-          - sqlfluff-templater-dbt==2.0.3
-          - dbt-core==1.4.5
+          - dbt-bigquery==1.6.0
+          - sqlfluff-templater-dbt==2.3.0
+          - dbt-core==1.6.0
 {% elif dbt_target == 'Snowflake' %}
       - id: sqlfluff-fix
         entry: > # eat newlines
           bash -c 'cd transform && sqlfluff fix --force --disable-progress-bar
           --show-lint-violations --nocolor --processes 1'
         additional_dependencies:
-          - dbt-snowflake==1.4.2
-          - sqlfluff-templater-dbt==2.0.3
-          - dbt-core==1.4.5
+          - dbt-snowflake==1.6.0
+          - sqlfluff-templater-dbt==2.3.0
+          - dbt-core==1.6.0
 {% endif %}

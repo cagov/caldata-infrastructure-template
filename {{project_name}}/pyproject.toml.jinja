@@ -9,11 +9,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 mkdocs-material = "~9.1.3"
-dbt-core = "~1.4.0"
+dbt-core = "~1.6.0"
 {% if dbt_target == 'BigQuery' %}
-dbt-bigquery = "~1.4.0"
+dbt-bigquery = "~1.6.0"
 {% elif dbt_target == 'Snowflake' %}
-dbt-snowflake = "~1.4.0"
+dbt-snowflake = "~1.6.0"
 {% endif %}
 pre-commit = "^3.3.1"
 
