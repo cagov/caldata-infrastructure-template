@@ -47,4 +47,10 @@ jobs:
         run: echo "$PRIVATE_KEY" > $SNOWFLAKE_PRIVATE_KEY_PATH
 {% endif %}
       - uses: actions/setup-python@v3
+      - uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
+      - name: Install dependencies
+        run: |
+          poetry install
       - uses: pre-commit/action@v3.0.0
