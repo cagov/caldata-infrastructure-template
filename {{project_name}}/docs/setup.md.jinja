@@ -101,7 +101,7 @@ from the dbt project root directory (`transform`).
 A minimal version of a `profiles.yml` for dbt development with is:
 
 ```yml
-dse_snowflake:
+{{ dbt_profile_name }}:
   target: dev
   outputs:
     dev:
