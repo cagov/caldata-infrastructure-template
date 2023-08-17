@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 env:
-  DBT_PROFILES_DIR: transform/ci
+  DBT_PROFILES_DIR: ci
 {% if dbt_target == 'Snowflake' %}
 {% raw %}
   PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
