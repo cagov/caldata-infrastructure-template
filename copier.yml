@@ -61,3 +61,10 @@ dbt_target:
   default: BigQuery
   help: |
     What data warehouse will you be using with dbt?
+
+dbt_profile_name:
+  type: str
+  default: "{{ project_name | trim | lower | replace('-', '_') | replace('\\'', '') }}"
+  help: |
+    What do you want your dbt profile name to be called? This should be all lower-case
+    and must be letters, digits, and underscores only.

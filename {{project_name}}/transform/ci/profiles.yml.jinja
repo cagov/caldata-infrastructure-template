@@ -3,11 +3,11 @@ config:
   use_colors: true
   warn_error: true
 
-{% if dbt_target == 'BigQuery' %}
-default:
+{{ dbt_profile_name }}:
   target: dev
   outputs:
     dev:
+{% if dbt_target == 'BigQuery' %}
       type: bigquery
       method: oauth
 {% raw %}
@@ -17,10 +17,6 @@ default:
       dataset: dbt_ci_should_not_create_this_dataset
       threads: 4
 {% elif dbt_target == 'Snowflake' %}
-default:
-  target: dev
-  outputs:
-    dev:
       type: snowflake
 {% raw %}
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
