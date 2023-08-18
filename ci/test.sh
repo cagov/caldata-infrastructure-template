@@ -16,6 +16,7 @@ for TARGET in Snowflake BigQuery; do
         --data email_address="test@test.com" \
         --data license=MIT \
         --data dbt_target=$TARGET \
+        --data dbt_profile_name="default" \
         caldata-infrastructure-template/ . 
 
     # Enter the new project
