@@ -31,16 +31,16 @@ for TARGET in Snowflake BigQuery; do
     poetry install --with dev
 
     # Run quality checks
-    pre-commit run --all-files
+    poetry run pre-commit run --all-files
 
     # Verify that the docs build
     pushd transform
-    dbt deps
-    dbt docs generate
+    poetry run dbt deps
+    poetry run dbt docs generate
     popd
 
     cp -r transform/target docs/dbt_docs
-    mkdocs build
+    poetry run mkdocs build
 
     popd
 done
