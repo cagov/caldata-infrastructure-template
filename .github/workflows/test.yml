@@ -38,7 +38,6 @@ jobs:
           # to have a live connection to compile the sample model, but unfortunately
           # dbt seems to require it.
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
-      - uses: actions/setup-python@v3
       - name: Setup git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -46,7 +45,7 @@ jobs:
       - name: Install dependencies 
         run: |
           pip install copier poetry
-          poetry config virtualenvs.create false
+          poetry config virtualenvs.in-project true
         # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
         # just use $SNOWFLAKE_PRIVATE_KEY
       - name: Set up private key
