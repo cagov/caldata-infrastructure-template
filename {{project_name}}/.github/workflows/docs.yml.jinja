@@ -11,8 +11,8 @@ env:
   DBT_PROFILES_DIR: transform/ci
 {% if dbt_target == 'Snowflake' %}
 {% raw %}
-  PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
-  SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER }}
+  PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
+  SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_PRD }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 {% endraw %}
   SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/private_key.p8
@@ -61,6 +61,6 @@ jobs:
       - name: Build dbt docs
         run: |
           dbt deps --project-dir=transform
-          dbt docs generate --project-dir=transform
+          dbt docs generate --project-dir=transform --target=prd
           cp -r transform/target docs/dbt_docs
       - run: mkdocs gh-deploy --force

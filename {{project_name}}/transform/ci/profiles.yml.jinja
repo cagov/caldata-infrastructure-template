@@ -29,3 +29,26 @@ config:
       schema: ci_should_not_create_this_schema
       threads: 4
 {% endif %}
+    prd:
+{% if dbt_target == 'BigQuery' %}
+      type: bigquery
+      method: oauth
+{% raw %}
+      project: "{{ env_var('GCP_PROJECT') }}"
+{% endraw %}
+      # Should not be created in CI as the CI service account is read-only!
+      dataset: analytics
+      threads: 4
+{% elif dbt_target == 'Snowflake' %}
+      type: snowflake
+{% raw %}
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+{% endraw %}
+      role: READER_PRD
+      warehouse: REPORTING_XS_PRD
+      database: ANALYTICS_PRD
+      schema: ANALYTICS
+      threads: 4
+{% endif %}
