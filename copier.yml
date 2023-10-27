@@ -11,10 +11,6 @@ _exclude:
   - ".git"
   - ".DS_Store"
   - ".svn"
-  - "/ci"
-  - "/.github"
-  - "/LICENSE"
-  - "/README.md"
 
 # Questions
 friendly_project_name:
