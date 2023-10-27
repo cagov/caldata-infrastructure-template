@@ -1,6 +1,7 @@
 _envops:
     lstrip_blocks: true
     trim_blocks: true
+_subdirectory: "{% raw %}{{project_name}}{% endraw %}"
 _exclude:
   - "copier.yaml"
   - "copier.yml"
