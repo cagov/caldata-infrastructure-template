@@ -9,6 +9,11 @@ PROJECT_NAME="sample-project"
 # Run copier.
 for TARGET in Snowflake BigQuery; do
     DIRECTORY=${PROJECT_NAME}-${TARGET}
+
+    # Enter the new project
+    mkdir -p $DIRECTORY
+    pushd $DIRECTORY
+
     copier copy \
         --data project_name=$DIRECTORY \
         --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
@@ -17,10 +22,7 @@ for TARGET in Snowflake BigQuery; do
         --data license=MIT \
         --data dbt_target=$TARGET \
         --data dbt_profile_name="default" \
-        caldata-infrastructure-template/ . 
-
-    # Enter the new project
-    pushd $DIRECTORY
+        ../caldata-infrastructure-template/ . 
 
     # Initialize git
     git init
