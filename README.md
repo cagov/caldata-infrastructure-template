@@ -13,7 +13,7 @@ It consists of:
 
 ## Usage
 
-Start with a Python environment. Install `copier`:
+Start with a Python environment. Install `copier` and `poetry`:
 
 ```bash
 python -m pip install copier
@@ -43,6 +43,14 @@ Once the project is rendered, you should initialize it as a git repository:
 git init
 git add .
 git commit -m "Initial commit"
+```
+
+Finally, install the Python dependencies and commity the `poetry.lock`:
+
+```bash
+poetry install
+git add poetry.lock
+git commit -m "Add poetry.lock"
 ```
 
 ### BigQuery setup
