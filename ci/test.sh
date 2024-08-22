@@ -7,7 +7,7 @@ FRIENDLY_PROJECT_NAME="Sample Project"
 PROJECT_NAME="sample-project"
 
 # Run copier.
-for TARGET in Snowflake BigQuery; do
+for TARGET in Snowflake; do
     DIRECTORY=${PROJECT_NAME}-${TARGET}
 
     # Enter the new project
