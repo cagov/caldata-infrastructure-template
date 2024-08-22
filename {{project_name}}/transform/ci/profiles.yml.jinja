@@ -1,22 +1,8 @@
-config:
-  send_anonymous_usage_stats: false
-  use_colors: true
-  warn_error: true
-
 {{ dbt_profile_name }}:
   target: dev
   outputs:
     dev:
-{% if dbt_target == 'BigQuery' %}
-      type: bigquery
-      method: oauth
-{% raw %}
-      project: "{{ env_var('GCP_PROJECT') }}"
-{% endraw %}
-      # Should not be created in CI as the CI service account is read-only!
-      dataset: dbt_ci_should_not_create_this_dataset
-      threads: 4
-{% elif dbt_target == 'Snowflake' %}
+{% if dbt_target == 'Snowflake' %}
       type: snowflake
 {% raw %}
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
@@ -30,16 +16,7 @@ config:
       threads: 4
 {% endif %}
     prd:
-{% if dbt_target == 'BigQuery' %}
-      type: bigquery
-      method: oauth
-{% raw %}
-      project: "{{ env_var('GCP_PROJECT') }}"
-{% endraw %}
-      # Should not be created in CI as the CI service account is read-only!
-      dataset: analytics
-      threads: 4
-{% elif dbt_target == 'Snowflake' %}
+{% if dbt_target == 'Snowflake' %}
       type: snowflake
 {% raw %}
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
