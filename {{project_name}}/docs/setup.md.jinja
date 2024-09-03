@@ -36,6 +36,18 @@ poetry install --with dev
 
 Any time the dependencies change, you can re-run the above command to update them.
 
+### 3. Install dbt dependencies
+
+dbt comes with some core libraries, but others can be added on. 
+This command installs those extra libraries that are needed for this repo. 
+It will have to be re-run each time the repo starts relying on a new dbt library. 
+
+To install dbt dependencies, open a terminal and enter:
+
+```bash
+poetry run dbt deps --project-dir transform 
+```
+
 ## Configure Snowflake
 
 In order to use Snowflake (as well as the terraform validators for the Snowflake configuration)
