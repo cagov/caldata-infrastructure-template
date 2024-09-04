@@ -56,3 +56,5 @@ jobs:
         run: |
           poetry install
       - uses: pre-commit/action@v3.0.0
+      - name: Install dbt deps
+        run: poetry run dbt deps --project-dir transform
