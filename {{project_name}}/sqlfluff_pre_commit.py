@@ -24,6 +24,7 @@ def main():
         )
     except subprocess.CalledProcessError as e:
         print(f"SQLFluff found linting errors:\n{e.stdout.decode()}")
+        print(f"stderr:\n{e.stderr.decode()}")
         sys.exit(e.returncode)
 
 
