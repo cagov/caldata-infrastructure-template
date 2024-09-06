@@ -10,10 +10,9 @@ permissions:
 
 env:
   DBT_PROFILES_DIR: ci
-  PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
+  SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
-  SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/private_key.p8
 
 defaults:
   run:
@@ -46,9 +45,5 @@ jobs:
         run: |
           pip install copier poetry
           poetry config virtualenvs.in-project true
-        # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
-        # just use $SNOWFLAKE_PRIVATE_KEY
-      - name: Set up private key
-        run: echo "$PRIVATE_KEY" > $SNOWFLAKE_PRIVATE_KEY_PATH
       - name: Test template
         run: ./caldata-infrastructure-template/ci/test.sh

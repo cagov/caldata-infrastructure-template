@@ -12,11 +12,10 @@ env:
 {% raw %}
   DBT_RAW_DB: RAW_PRD
   DBT_ANALYTICS_DB: ANALYTICS_PRD
-  PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
+  SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_PRD }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 {% endraw %}
-  SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/private_key.p8
 {% endif %}
 
 jobs:
@@ -42,11 +41,6 @@ jobs:
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 {% endraw %}
           export_environment_variables: true
-{% elif dbt_target == 'Snowflake' %}
-        # TODO: once we are on dbt-snowflake 1.5, no need to pipe to a file, we can
-        # just use $SNOWFLAKE_PRIVATE_KEY
-      - name: Set up private key
-        run: echo "$PRIVATE_KEY" > $SNOWFLAKE_PRIVATE_KEY_PATH
 {% endif %}
       - uses: actions/cache@v2
         with:
