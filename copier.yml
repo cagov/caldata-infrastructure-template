@@ -53,11 +53,8 @@ license:
 
 dbt_target:
   choices:
-    - BigQuery
     - Snowflake
-  default: BigQuery
-  help: |
-    What data warehouse will you be using with dbt?
+  default: Snowflake
 
 dbt_profile_name:
   type: str
