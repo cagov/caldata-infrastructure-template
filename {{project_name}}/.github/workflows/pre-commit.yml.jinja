@@ -7,10 +7,11 @@ on:
 
 env:
   DBT_PROFILES_DIR: ci
+- {% raw %}
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_DEV }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
-
+- {% endraw %}
 defaults:
   run:
     shell: bash -l {0}
