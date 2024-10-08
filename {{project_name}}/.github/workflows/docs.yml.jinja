@@ -8,15 +8,11 @@ permissions:
 
 env:
   DBT_PROFILES_DIR: transform/ci
-{% if dbt_target == 'Snowflake' %}
-{% raw %}
   DBT_RAW_DB: RAW_PRD
   DBT_ANALYTICS_DB: ANALYTICS_PRD
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_PRD }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
-{% endraw %}
-{% endif %}
 
 jobs:
   build-docs:
