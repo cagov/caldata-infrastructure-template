@@ -2,7 +2,6 @@
   target: dev
   outputs:
     dev:
-{% if dbt_target == 'Snowflake' %}
       type: snowflake
 {% raw %}
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
@@ -14,9 +13,7 @@
       database: ANALYTICS_DEV
       schema: ci_should_not_create_this_schema
       threads: 4
-{% endif %}
     prd:
-{% if dbt_target == 'Snowflake' %}
       type: snowflake
 {% raw %}
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
@@ -28,4 +25,3 @@
       database: ANALYTICS_PRD
       schema: ANALYTICS
       threads: 4
-{% endif %}

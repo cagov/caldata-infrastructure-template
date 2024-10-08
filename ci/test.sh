@@ -20,7 +20,6 @@ for TARGET in Snowflake; do
         --data team_name="$TEAM_NAME" \
         --data email_address="test@test.com" \
         --data license=MIT \
-        --data dbt_target=$TARGET \
         --data dbt_profile_name="default" \
         ../caldata-infrastructure-template/ . 
 

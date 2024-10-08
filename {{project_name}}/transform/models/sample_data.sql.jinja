@@ -1,21 +1,3 @@
-{% if dbt_target == 'BigQuery' %}
-with
-dates as (
-    select *
-    from
-        unnest(generate_date_array('2023-01-01', '2023-12-31')) as date
-        with
-        offset
-            as
-            offset
-)
-
-select
-    offset as id,
-    date,
-    generate_uuid() as value
-from dates
-{% elif dbt_target == 'Snowflake' %}
 select
     randstr(uniform(10, 30, random(1)), uniform(1, 100000, random(1)))::varchar(
         30
@@ -28,4 +10,3 @@ select
         30
     ) as email
 from table(generator(rowcount => 1000))
-{% endif %}

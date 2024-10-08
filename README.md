@@ -53,23 +53,6 @@ git add poetry.lock
 git commit -m "Add poetry.lock"
 ```
 
-### BigQuery setup
-
-Using the dbt project with BigQuery requires the following setup steps:
-* Users must set up their dbt profile locally to develop as themselves.
-  Instructions for this can be found in the "Local Development" section of the dbt project README.
-* Repository owners must set up a service account in GCP for continuous integration to
-  be able to run against a test GCP project:
-    * Go to the "Service Accounts" section in the Google Cloud Console.
-    * Click "Create Service Account"
-    * Make a new service account with a name like `<my-project-name>-dbt-ci-bot`.
-      Give that account the IAM role of "BigQuery Metadata Viewer".
-    * Go to the "Keys" tab and create a new JSON private key.
-    * In the GitHub page for your new repository, go to `Settings -> Secrets and Variables -> Actions`
-    * Create a new repository secret called `GOOGLE_CREDENTIALS` and paste the JSON key
-      into the value for the secret. This should allow CI to authenticate with your
-      test BigQuery project and view metadata for datasets and tables.
-
 ### Snowflake setup
 
 The projects generated from our infrastructure template need read access to the

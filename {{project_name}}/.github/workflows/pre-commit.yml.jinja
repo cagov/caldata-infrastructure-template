@@ -7,14 +7,11 @@ on:
 
 env:
   DBT_PROFILES_DIR: ci
-{% if dbt_target == 'Snowflake' %}
 {% raw %}
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_DEV }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 {% endraw %}
-{% endif %}
-
 defaults:
   run:
     shell: bash -l {0}
@@ -24,22 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-{% if dbt_target == 'BigQuery' %}
-      - id: auth
-        name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          # To set this up you should create a GCP service account
-          # with the "BigQuery Metadata Viewer", "BigQuery Job User", and
-          # "BigQuery Data Viewer" roles. This will allow it to execute read-only
-          # queries against your data warehouse, which is needed to generate the docs
-          # Next, create a service account JSON file, and put it into a GitHub actions
-          # secret under the name GOOGLE_CREDENTIALS.
-{% raw %}
-          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
-{% endraw %}
-          export_environment_variables: true
-{% endif %}
+
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"

@@ -51,14 +51,6 @@ license:
     please refer to https://choosealicense.com/. If you would like a license not on this
     list, you can always delete it and substitute your own.
 
-dbt_target:
-  choices:
-    - BigQuery
-    - Snowflake
-  default: BigQuery
-  help: |
-    What data warehouse will you be using with dbt?
-
 dbt_profile_name:
   type: str
   default: "{{ project_name | trim | lower | replace('-', '_') | replace('\\'', '') }}"
