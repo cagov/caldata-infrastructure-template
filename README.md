@@ -3,8 +3,10 @@
 ![test](https://github.com/cagov/caldata-infrastructure-template/actions/workflows/test.yml/badge.svg?branch=main)
 
 This repository is a [copier](https://copier.readthedocs.io/en/stable/) template
-which can be used to quickly seed a modern data stack project.
-It consists of:
+which can be used to quickly seed a modern data stack project. Instructions may vary depending
+on if the repo is hosted via GitHub or Azure DevOps, so we make some distinctions below.
+
+This repo consists of:
 
 1. A [dbt](https://docs.getdbt.com/) project.
 1. [pre-commit](https://pre-commit.com/) checks for enforcing code-quality.
@@ -24,9 +26,14 @@ Create a directory into which the project will be rendered:
 ```bash
 mkdir <your-project-name>
 cd <your-project-name>
+git init
 ```
 
-Create a new project using the copier command-line tool, with HTTPS:
+Create a new project using the copier command-line tool, with...
+
+
+### GitHub repo
+HTTPS:
 ```bash
 copier copy https://github.com/cagov/caldata-infrastructure-template .
 ```
@@ -35,12 +42,22 @@ OR with SSH:
 copier copy git@github.com:cagov/caldata-infrastructure-template.git .
 ```
 
+### Azure DevOps repo
+Install git credential manager (with [Homebrew](https://brew.sh/) if on a mac, if on a windows you should have it by default.) Then run the following three commands:
+
+```bash
+brew install git-credential-manager
+
+git remote add origin <Azure DevOps repo url e.g. https://caldata-sandbox@dev.azure.com/caldata-sandbox/mdsa-test/_git/mdsa-test>
+
+copier copy https://github.com/cagov/caldata-infrastructure-template .
+```
+
 This will ask you a series of questions, the answers to which will be used to populate the project.
 
 Once the project is rendered, you should initialize it as a git repository:
 
 ```bash
-git init
 git add .
 git commit -m "Initial commit"
 ```
@@ -53,7 +70,12 @@ git add poetry.lock
 git commit -m "Add poetry.lock"
 ```
 
-### Snowflake setup
+### dbt Cloud setup
+For Azure DevOps repos you'll follow the instructions [here](https://docs.getdbt.com/docs/cloud/git/setup-azure#register-an-azure-ad-app).
+
+For GitHub repos you'll follow the instructions [here](https://docs.getdbt.com/docs/cloud/git/connect-github).
+
+### GitHub-based Snowflake setup
 
 The projects generated from our infrastructure template need read access to the
 Snowflake account in order to do two things from GitHub actions:
