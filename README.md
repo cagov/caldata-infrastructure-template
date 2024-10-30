@@ -43,7 +43,7 @@ copier copy git@github.com:cagov/caldata-infrastructure-template.git .
 ```
 
 ### Azure DevOps repo
-Install git credential manager (with [Homebrew](https://brew.sh/) if on a mac, if on a windows you should have it by default.) Then run the following three commands:
+Install git credential manager (with [Homebrew](https://brew.sh/) if on a Mac, if on a windows you should have it by default with [this git instalation](https://git-scm.com/downloads/win).) Then run the following three commands:
 
 ```bash
 brew install git-credential-manager
