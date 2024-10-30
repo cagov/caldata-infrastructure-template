@@ -1,3 +1,4 @@
+{% if execute %}
 select
     randstr(uniform(10, 30, random(1)), uniform(1, 100000, random(1)))::varchar(
         30
@@ -10,3 +11,4 @@ select
         30
     ) as email
 from table(generator(rowcount => 1000))
+{% endif %}
