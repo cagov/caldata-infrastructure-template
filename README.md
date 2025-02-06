@@ -48,7 +48,7 @@ Install git credential manager (with [Homebrew](https://brew.sh/) if on a Mac, i
 ```bash
 brew install git-credential-manager
 
-git remote add origin <Azure DevOps repo url e.g. https://caldata-sandbox@dev.azure.com/caldata-sandbox/mdsa-test/_git/mdsa-test>
+git clone <Azure DevOps repo url e.g. https://caldata-sandbox@dev.azure.com/caldata-sandbox/mdsa-test/_git/mdsa-test>
 
 copier copy https://github.com/cagov/caldata-infrastructure-template .
 ```
@@ -72,6 +72,7 @@ git commit -m "Add poetry.lock"
 
 ### dbt Cloud setup
 For Azure DevOps repos you'll follow the instructions [here](https://docs.getdbt.com/docs/cloud/git/setup-azure#register-an-azure-ad-app).
+To integrate dbtCloud with Azure DevOps, the service user (legacy) option must be used. Complete the steps found in the documentation.
 
 For GitHub repos you'll follow the instructions [here](https://docs.getdbt.com/docs/cloud/git/connect-github).
 
