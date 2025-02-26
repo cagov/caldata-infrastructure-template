@@ -104,7 +104,7 @@ Add the following repository secrets:
 
 | Variable | Value |
 |----------|-------|
-| `SNOWFLAKE_ACCOUNT` | new account locator |
+| `SNOWFLAKE_ACCOUNT` | <org_name>-<account_name> # format is organization-account |
 | `SNOWFLAKE_USER_DEV` | `GITHUB_ACTIONS_SVC_USER_DEV` |
 | `SNOWFLAKE_USER_PRD` | `GITHUB_ACTIONS_SVC_USER_PRD` |
 | `SNOWFLAKE_PRIVATE_KEY_DEV` | dev service account private key |
