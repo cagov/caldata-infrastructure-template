@@ -23,7 +23,8 @@ conda install conda-forge::poetry
 python -m pip install copier
 ```
 
-Create a directory online and locally into which the project will be rendered:
+Create a repo online and make sure to choose the same license here as you will below, typically MIT. Be sure to add all the necessary team members with the right levels of permissions.
+Next, create the repo locally into which the project will be rendered:
 
 ```bash
 mkdir <your-project-name>
