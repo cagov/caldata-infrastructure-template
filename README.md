@@ -18,12 +18,10 @@ This repo consists of:
 Start with a Python environment – we typically use [conda](https://docs.anaconda.com/anaconda/install/), but any environment manager will work. Install `copier` and `poetry`. Check that you have `python` installed or updated as well.:
 
 ```bash
-conda install conda-forge::poetry
-
-python -m pip install copier
+pipx install copier poetry
 ```
 
-Create a repo online and make sure to choose the same license here as you will below, typically MIT. Be sure to add all the necessary team members with the right levels of permissions.
+Create a repo online and choose `None` for the license. Be sure to add all the necessary team members with the right level of permissions.
 Next, create the repo locally into which the project will be rendered:
 
 ```bash
