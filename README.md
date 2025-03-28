@@ -15,13 +15,14 @@ This repo consists of:
 
 ## Usage
 
-Start with a Python environment. Install `copier` and `poetry`:
+Start with a Python environment – we typically use [conda](https://docs.anaconda.com/anaconda/install/), but any environment manager will work. Install `copier` and `poetry`. Check that you have `python` installed or updated as well.:
 
 ```bash
-python -m pip install copier
+pipx install copier poetry
 ```
 
-Create a directory into which the project will be rendered:
+Create a repo online and choose `None` for the license. Be sure to add all the necessary team members with the right level of permissions.
+Next, create the repo locally into which the project will be rendered:
 
 ```bash
 mkdir <your-project-name>
@@ -29,20 +30,24 @@ cd <your-project-name>
 git init
 ```
 
-Create a new project using the copier command-line tool, with...
+Create a new project using the copier command-line tool, with the following prompts below depending on if this is in GitHub or Azure DevOps. This will ask you a series of questions, the answers to which will be used to populate the project.
 
+### GitHub
 
-### GitHub repo
 HTTPS:
+
 ```bash
 copier copy https://github.com/cagov/caldata-infrastructure-template .
 ```
+
 OR with SSH:
+
 ```bash
 copier copy git@github.com:cagov/caldata-infrastructure-template.git .
 ```
 
-### Azure DevOps repo
+### Azure DevOps
+
 Install git credential manager (with [Homebrew](https://brew.sh/) if on a Mac, if on a windows you should have it by default with [this git instalation](https://git-scm.com/downloads/win).) Then run the following three commands:
 
 ```bash
@@ -53,24 +58,25 @@ git clone <Azure DevOps repo url e.g. https://caldata-sandbox@dev.azure.com/cald
 copier copy https://github.com/cagov/caldata-infrastructure-template .
 ```
 
-This will ask you a series of questions, the answers to which will be used to populate the project.
-
-Once the project is rendered, you should initialize it as a git repository:
+Once the project is rendered, you should add and commit the changes:
 
 ```bash
 git add .
 git commit -m "Initial commit"
 ```
 
-Finally, install the Python dependencies and commity the `poetry.lock`:
+Finally, install the Python dependencies and commit the `poetry.lock`:
 
 ```bash
 poetry install
 git add poetry.lock
 git commit -m "Add poetry.lock"
+git remote add <new-repo-name> https://github.com/cagov/<new-repo-name>
+git push --set-upstream <new-repo-name> main
 ```
 
 ### dbt Cloud setup
+
 For Azure DevOps repos you'll follow the instructions [here](https://docs.getdbt.com/docs/cloud/git/setup-azure#register-an-azure-ad-app).
 To integrate dbtCloud with Azure DevOps, the service user (legacy) option must be used. Complete the steps found in the documentation.
 
