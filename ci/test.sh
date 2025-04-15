@@ -20,7 +20,7 @@ for TARGET in Snowflake; do
         --data team_name="$TEAM_NAME" \
         --data email_address="test@test.com" \
         --data license=MIT \
-        --data dbt_profile_name="default" \
+        --data dbt_profile_name="sample_project" \
         ../caldata-infrastructure-template/ . 
 
     # Initialize git
