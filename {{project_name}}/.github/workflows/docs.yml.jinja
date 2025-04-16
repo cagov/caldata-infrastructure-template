@@ -20,26 +20,27 @@ jobs:
   build-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-      - uses: actions/cache@v2
-        with:
-          key: {% raw %}${{ github.ref }}
-{% endraw %}
-          path: .cache
       - uses: snok/install-poetry@v1
         with:
-          virtualenvs-create: false
+          virtualenvs-path: .venv
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: {% raw %}venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+{% endraw %}
       - name: Install dependencies
-        run: |
-          poetry install
+        run: poetry install --no-interaction --no-root
       - name: Build dbt docs
         run: |
-          dbt deps --project-dir=transform
-          dbt docs generate --project-dir=transform --target=prd
+          poetry run dbt deps --project-dir=transform
+          poetry run dbt docs generate --project-dir=transform --target=prd
           cp -r transform/target docs/dbt_docs
       - name: Deploy docs to GitHub Pages
-        if: github.ref.name == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: poetry run mkdocs gh-deploy --force

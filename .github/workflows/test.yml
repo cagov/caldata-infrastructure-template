@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 env:
-  DBT_PROFILES_DIR: ci
+  DBT_PROFILES_DIR: transform/ci
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
@@ -22,28 +22,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: caldata-infrastructure-template
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-      - id: auth
-        name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          # The credentials here can read metadata only, which makes them
-          # good enough for `dbt compile`. It really shouldn't be necessary
-          # to have a live connection to compile the sample model, but unfortunately
-          # dbt seems to require it.
-          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
       - name: Setup git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
       - name: Install dependencies 
         run: |
-          pip install copier poetry
-          poetry config virtualenvs.in-project true
+          pipx install copier poetry
       - name: Test template
         run: ./caldata-infrastructure-template/ci/test.sh

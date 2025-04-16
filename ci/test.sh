@@ -20,7 +20,7 @@ for TARGET in Snowflake; do
         --data team_name="$TEAM_NAME" \
         --data email_address="test@test.com" \
         --data license=MIT \
-        --data dbt_profile_name="default" \
+        --data dbt_profile_name="sample_project" \
         ../caldata-infrastructure-template/ . 
 
     # Initialize git
@@ -35,10 +35,8 @@ for TARGET in Snowflake; do
     poetry run pre-commit run --all-files
 
     # Verify that the docs build
-    pushd transform
-    poetry run dbt deps
-    poetry run dbt docs generate
-    popd
+    poetry run dbt deps --project-dir transform
+    poetry run dbt docs generate --project-dir transform
 
     cp -r transform/target docs/dbt_docs
     poetry run mkdocs build
