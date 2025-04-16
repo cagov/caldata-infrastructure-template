@@ -39,7 +39,6 @@ jobs:
           key: {% raw %}venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
 {% endraw %}
       - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
       - name: Install dbt deps
         run: poetry run dbt deps --project-dir transform
