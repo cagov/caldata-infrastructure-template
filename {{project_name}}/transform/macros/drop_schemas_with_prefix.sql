@@ -1,7 +1,7 @@
 {% macro drop_schemas_with_prefix(database_name=none, prefix=none) %}
 
 {#
-  This macro drops all schemas in a specified Snowflake database that 
+  This macro drops all schemas in a specified Snowflake database that
   start with a given prefix. It is useful for cleaning up personal
   development and PR schemas. The variables `database_name` and `prefix`
   that are needed for this macro are set in `dbt_project.yml`.
@@ -18,7 +18,6 @@
     - Cleanup for a specific database and/or prefix:
       dbt run-operation drop_schemas_with_prefix --args '{database_name: ANALYTICS_DEV, prefix: DBT_CLOUD_PR...}'
 #}
-
 
 {# Ensure the macro only runs during execution and not parsing #}
 {% if execute %}
@@ -42,7 +41,6 @@
     {% endif %}
   {% endif %}
 
-
 {{ log("Running schema cleanup for database: " ~ effective_database_name ~ " with prefix: " ~ effective_prefix, info=True) }}
 
 {#
@@ -53,13 +51,13 @@
 {% endset %}
 
 {#
-  Run the query and store the list. 
+  Run the query and store the list.
   dbt's [`run_query` docs](https://docs.getdbt.com/reference/dbt-jinja-functions/run_query).
 #}
 {% set schemas_to_drop = run_query(get_schemas) %}
 
 {#
-  Iterate over each row in the results. 
+  Iterate over each row in the results.
   The schema name is the second column (index 1 or [1]).
 #}
 
