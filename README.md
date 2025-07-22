@@ -17,7 +17,9 @@ This repo consists of:
 
 Start with an environment that has access to `uv`.
 This can be installed via a number of packages (ODI staff usually use [Homebrew](https://brew.sh/)).
-Install `copier`:
+Install `copier` as a uv [tool](https://docs.astral.sh/uv/concepts/tools/).
+This creates a separate virtual environment for the `copier` command line interface,
+and avoids any possible conflicts with the actual project dependencies:
 ```bash
 uv tool install copier
 ```
@@ -31,7 +33,9 @@ cd <your-project-name>
 git init
 ```
 
-Create a new project using the copier command-line tool, with the following prompts below depending on if this is in GitHub or Azure DevOps. This will ask you a series of questions, the answers to which will be used to populate the project.
+Create a new project using the copier command-line tool, with the following prompts below depending on if this is in GitHub or Azure DevOps.
+This will ask you a series of questions, the answers to which will be used to populate the project
+(`uv` tools can be explicitly invoked by prefixing the command with `uvx):
 
 ### GitHub
 
