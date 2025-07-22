@@ -16,7 +16,7 @@ This repo consists of:
 ## Usage
 
 Start with an environment that has access to `uv`.
-This can be installed via a number of packages (ODI staff usually use Homebrew).
+This can be installed via a number of packages (ODI staff usually use [Homebrew](https://brew.sh/)).
 Install `copier`:
 ```bash
 uv tool install copier
