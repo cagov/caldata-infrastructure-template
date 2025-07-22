@@ -1,41 +1,45 @@
 # Repository setup
 
+These are instructions for individual contributors to set up the repository locally.
+
 ## Install dependencies
 
-### 1. Set up a Python virtual environment
-
-Much of the software in this project is written in Python.
-It is usually worthwhile to install Python packages into a virtual environment,
-which allows them to be isolated from those in other projects which might have different version constraints.
-
-One popular solution for managing Python environments is [Anaconda/Miniconda](https://docs.conda.io/en/latest/miniconda.html).
-Another option is to use [`pyenv`](https://github.com/pyenv/pyenv).
-Pyenv is lighter weight, but is Python-only, whereas conda allows you to install packages from other language ecosystems.
-
-Here are instructions for setting up a Python environment using Miniconda:
-
-1. Follow the installation instructions for installing [Miniconda](https://docs.conda.io/en/latest/miniconda.html#system-requirements).
-1. Create a new environment called `dev`:
-   ```bash
-   conda create -n infra -c conda-forge python=3.10 poetry
-   ```
-1. Activate the `dev` environment:
-   ```bash
-   conda activate dev
-   ```
+We use `uv` to manage our Python virtual environments.
+If you have not yet installed it on your system,
+you can follow the instructions for it [here](https://docs.astral.sh/uv/getting-started/installation/).
+Most of the ODI team uses [Homebrew](https://brew.sh) to install the package.
+We do not recommend installing `uv` using `pip`: as a tool for managing Python environments,
+it makes sense for it to live outside of a particular Python distribution.
 
 ### 2. Install Python dependencies
 
-Python dependencies are specified using [`poetry`](https://python-poetry.org/).
+If you prefix your commands with `uv run` (e.g. `uv run dbt build`),
+then `uv` will automatically make sure that the appropriate dependencies are installed before invoking the command.
 
-To install them, open a terminal and enter:
-
+However, if you want to explicitly ensure that all of the dependencies are installed in the virtual environment, run
 ```bash
-poetry install --with dev
+uv sync
 ```
+in the root of the repository.
 
-Any time the dependencies change, you can re-run the above command to update them.
+Once the dependencies are installed, you can also "activate" the virtual environment
+(similar to how conda virtual environments are activated) by running
+```bash
+source .venv/bin/activate
+```
+from the repository root.
+With the environment activated, you no longer have to prefix commands with `uv run`.
 
+Which approach to take is largely a matter of personal preference:
+
+- Using the `uv run` prefix is more reliable, as dependencies are *always* resolved before executing.
+- Using `source .venv/bin/activate` involves less typing.
+
+### 3. Install go dependencies
+
+We use [Terraform](https://www.terraform.io/) to manage infrastructure.
+Dependencies for Terraform (mostly in the [go ecosystem](https://go.dev/))
+can be installed via a number of different package managers.
 ### 3. Install dbt dependencies
 
 dbt comes with some core libraries, but others can be added on.
@@ -45,7 +49,7 @@ It will have to be re-run each time the repo starts relying on a new dbt library
 To install dbt dependencies, open a terminal and enter:
 
 ```bash
-poetry run dbt deps --project-dir transform
+uv run dbt deps --project-dir transform
 ```
 
 ## Configure Snowflake
