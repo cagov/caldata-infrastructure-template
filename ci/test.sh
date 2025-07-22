@@ -14,7 +14,7 @@ for TARGET in Snowflake; do
     mkdir -p $DIRECTORY
     pushd $DIRECTORY
 
-    copier copy \
+    uvx copier copy \
         --data project_name=$DIRECTORY \
         --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
         --data team_name="$TEAM_NAME" \

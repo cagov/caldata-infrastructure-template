@@ -32,8 +32,8 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-      - name: Install dependencies 
+      - name: Install copier 
         run: |
-          pipx install copier uv
+          uv tool install copier
       - name: Test template
         run: ./caldata-infrastructure-template/ci/test.sh
