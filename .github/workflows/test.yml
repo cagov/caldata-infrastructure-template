@@ -25,15 +25,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: caldata-infrastructure-template
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.13"
       - name: Setup git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-      - name: Install dependencies 
+      - name: Install copier 
         run: |
-          pipx install copier poetry
+          uv tool install copier
       - name: Test template
         run: ./caldata-infrastructure-template/ci/test.sh

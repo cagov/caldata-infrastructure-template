@@ -14,7 +14,7 @@ for TARGET in Snowflake; do
     mkdir -p $DIRECTORY
     pushd $DIRECTORY
 
-    copier copy \
+    uvx copier copy \
         --data project_name=$DIRECTORY \
         --data friendly_project_name="$FRIENDLY_PROJECT_NAME" \
         --data team_name="$TEAM_NAME" \
@@ -28,18 +28,15 @@ for TARGET in Snowflake; do
     git add .
     git commit -m "Initial commit"
 
-    # Install the dependencies
-    poetry install --with dev
-
     # Run quality checks
-    poetry run pre-commit run --all-files
+    uv run pre-commit run --all-files
 
     # Verify that the docs build
-    poetry run dbt deps --project-dir transform
-    poetry run dbt docs generate --project-dir transform
+    uv run dbt deps --project-dir transform
+    uv run dbt docs generate --project-dir transform
 
     cp -r transform/target docs/dbt_docs
-    poetry run mkdocs build
+    uv run mkdocs build
 
     popd
 done

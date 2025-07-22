@@ -15,10 +15,13 @@ This repo consists of:
 
 ## Usage
 
-Start with a Python environment – we typically use [conda](https://docs.anaconda.com/anaconda/install/), but any environment manager will work. Install `copier` and `poetry`. Check that you have `python` installed or updated as well.:
-
+Start with an environment that has access to `uv`.
+This can be installed via a number of packages (ODI staff usually use [Homebrew](https://brew.sh/)).
+Install `copier` as a uv [tool](https://docs.astral.sh/uv/concepts/tools/).
+This creates a separate virtual environment for the `copier` command line interface,
+and avoids any possible conflicts with the actual project dependencies:
 ```bash
-pipx install copier poetry
+uv tool install copier
 ```
 
 Create a repo online and choose `None` for the license. Be sure to add all the necessary team members with the right level of permissions.
@@ -30,20 +33,22 @@ cd <your-project-name>
 git init
 ```
 
-Create a new project using the copier command-line tool, with the following prompts below depending on if this is in GitHub or Azure DevOps. This will ask you a series of questions, the answers to which will be used to populate the project.
+Create a new project using the copier command-line tool, with the following prompts below depending on if this is in GitHub or Azure DevOps.
+This will ask you a series of questions, the answers to which will be used to populate the project
+(`uv` tools can be explicitly invoked by prefixing the command with `uvx):
 
 ### GitHub
 
 HTTPS:
 
 ```bash
-copier copy https://github.com/cagov/caldata-infrastructure-template .
+uvx copier copy https://github.com/cagov/caldata-infrastructure-template .
 ```
 
 OR with SSH:
 
 ```bash
-copier copy git@github.com:cagov/caldata-infrastructure-template.git .
+uvx copier copy git@github.com:cagov/caldata-infrastructure-template.git .
 ```
 
 ### Azure DevOps
@@ -55,7 +60,7 @@ brew install git-credential-manager
 
 git clone <Azure DevOps repo url e.g. https://caldata-sandbox@dev.azure.com/caldata-sandbox/mdsa-test/_git/mdsa-test>
 
-copier copy https://github.com/cagov/caldata-infrastructure-template .
+uvx copier copy https://github.com/cagov/caldata-infrastructure-template .
 ```
 
 Once the project is rendered, you should add and commit the changes:
@@ -65,12 +70,12 @@ git add .
 git commit -m "Initial commit"
 ```
 
-Finally, install the Python dependencies and commit the `poetry.lock`:
+Finally, install the Python dependencies and commit the `uv.lock`:
 
 ```bash
-poetry install
-git add poetry.lock
-git commit -m "Add poetry.lock"
+uv sync
+git add uv.lock
+git commit -m "Add uv.lock"
 git remote add <new-repo-name> https://github.com/cagov/<new-repo-name>
 git push --set-upstream <new-repo-name> main
 ```
