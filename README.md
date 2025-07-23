@@ -142,3 +142,21 @@ then run
 ```bash
 ./caldata-infrastructure-template/ci/test.sh
 ```
+
+## Updating a project with new changes to the template
+
+If the template has new features, maintenance, or bugfixes,
+it can be useful to apply those changes from the template automatically,
+rather than manually copying them around.
+
+The main docs for updating a project are [here](https://copier.readthedocs.io/en/stable/updating/),
+but we briefly summarize some steps here:
+
+1. Check out a new branch for applying updates.
+1. Make sure that there are no uncommitted changes or files (even ones you don't intend to keep in version control!) in the repository.
+    Running `git status --porcelain` should show nothing.
+1. Run `copier update --defaults`, which tries to apply new changes from the template, reusing your answers to the template questions.
+1. Review the applied changes and make any corrections before staging and committing them:
+    * There may be merge conflicts in files that have changed with git-style merge conflict markers.
+    * There may be new files that need to be added to the repository
+1. Create a pull request with the template changes, review, and merge it.
