@@ -98,7 +98,9 @@
     {%- if table_key not in table_columns -%}
       {%- do table_columns.update({table_key: {'columns': []}}) -%}
     {%- endif -%}
-    {%- do table_columns[table_key]['columns'].append(row.column_name) -%}
+    {%- if row.column_name not in table_columns[table_key]['columns'] -%}
+      {%- do table_columns[table_key]['columns'].append(row.column_name) -%}
+    {%- endif -%}
   {%- endfor -%}
 
   {{ return(table_columns) }}
@@ -127,9 +129,11 @@
       'table_schema': node.schema,
       'table_database': node.database,
       'resource_type': resource_type,
+      'materialized': node.config.materialized if resource_type == 'model' else None,
       'validation_issues': ['TABLE_NOT_FOUND'],
       'documented_but_missing_columns': [],
-      'undocumented_columns': []
+      'undocumented_columns': [],
+      'file_path': node.path
     } -%}
     {{ return(result) }}
   {%- endif -%}
@@ -173,9 +177,11 @@
     'table_schema': node.schema,
     'table_database': node.database,
     'resource_type': resource_type,
+    'materialized': node.config.materialized if resource_type == 'model' else None,
     'validation_issues': validation_issues,
     'documented_but_missing_columns': documented_but_missing_columns,
-    'undocumented_columns': undocumented_columns
+    'undocumented_columns': undocumented_columns,
+    'file_path': node.path
   } -%}
 
   {{ return(result) }}
@@ -242,8 +248,10 @@
     {%- for issue in result.validation_issues -%}
       {%- if issue in error_issues -%}
         {%- if not has_errors -%}
-          {%- do failed_tables_list.append(result.table_name) -%}
-          {%- set has_errors = true -%}
+          {% if result.materialized != 'ephemeral'%}
+            {%- do failed_tables_list.append(result.table_name) -%}
+            {%- set has_errors = true -%}
+          {% endif %}
         {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
@@ -254,7 +262,9 @@
         {{ log('✅ ' ~ resource_type | title ~ ' ' ~ result.table_name ~ ': Schema matches documentation', info=True) }}
       {%- endif -%}
     {%- elif 'TABLE_NOT_FOUND' in result.validation_issues -%}
-      {%- if resource_type == 'model' -%}
+      {%- if resource_type == 'model' and result.materialized == 'ephemeral' -%}
+        {{ log('⏭️  Model ' ~ result.table_name ~ ': Skipped schema validation (ephemeral model)', info=True) }}
+      {%- elif resource_type == 'model' -%}}
         {{ log('❌ Model ' ~ result.table_name ~ ': Model not found in database (may not be built yet)', info=True) }}
       {%- else -%}
         {{ log('❌ Source ' ~ result.table_name ~ ': Source not found in database', info=True) }}
@@ -276,6 +286,7 @@
           {{ log('   ⚠️  Undocumented columns (not treated as errors): ' ~ result.undocumented_columns | join(', '), info=True) }}
         {%- endif -%}
       {%- endif -%}
+      {{ log('   ' ~ result.file_path, info=True) }}
     {%- endif -%}
   {%- endfor -%}
 
