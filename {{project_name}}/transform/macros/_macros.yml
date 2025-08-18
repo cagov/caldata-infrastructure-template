@@ -27,7 +27,7 @@ macros:
           If true, treats undocumented columns as validation errors. If false,
           undocumented columns are reported as warnings but don't cause failure.
           Defaults to true.
-  - name: drop_schema_with_prefix
+  - name: drop_schemas_with_prefix
     description: |
       Macro to drop a schema in the database with a specified prefix.
 
@@ -43,8 +43,7 @@ macros:
         type: string
         description: |
           The database in which the schema resides. Optional; defaults to the target database.
-
-  - name: get_custom_schemas
+  - name: generate_schema_name
     description: |
       Macro to retrieve a custom schema name for a model or source.
 
