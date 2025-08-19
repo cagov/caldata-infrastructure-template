@@ -94,7 +94,7 @@
   -- Process all the collected column data
   {%- set table_columns = {} -%}
   {%- for row in all_columns_data -%}
-    {%- set table_key = row.table_name -%}
+    {%- set table_key = row.database ~ '.' ~ row.schema ~ '.' ~ row.table_name | upper -%}
     {%- if table_key not in table_columns -%}
       {%- do table_columns.update({table_key: {'columns': []}}) -%}
     {%- endif -%}
@@ -115,7 +115,7 @@
 {%- macro _validate_single_table_schema(node, table_columns_info, resource_type) -%}
 
   -- Get actual columns from the pre-fetched data
-  {%- set table_key = node.name.upper() -%}
+  {%- set table_key = node.database.upper() ~ '.' ~ node.schema.upper() ~ '.' ~ node.name.upper() -%}
   {%- if table_key in table_columns_info -%}
     {%- set actual_columns = table_columns_info[table_key]['columns'] -%}
   {%- else -%}
@@ -242,6 +242,7 @@
   -- Process all validation results
   {%- for result in validation_results -%}
     {%- set resource_type = result.resource_type -%}
+    {%- set resource_name = result.table_database ~ '.' ~ result.table_schema ~ '.' ~ result.table_name | upper -%}
 
     -- Check if this table has any error issues
     {%- set has_errors = false -%}
@@ -259,23 +260,23 @@
     -- Log the result based on errors_only flag
     {%- if result.validation_issues | length == 0 -%}
       {%- if not errors_only -%}
-        {{ log('✅ ' ~ resource_type | title ~ ' ' ~ result.table_name ~ ': Schema matches documentation', info=True) }}
+        {{ log('✅ ' ~ resource_type | title ~ ' ' ~ resource_name ~ ': Schema matches documentation', info=True) }}
       {%- endif -%}
     {%- elif 'TABLE_NOT_FOUND' in result.validation_issues -%}
       {%- if resource_type == 'model' and result.materialized == 'ephemeral' -%}
-        {{ log('⏭️  Model ' ~ result.table_name ~ ': Skipped schema validation (ephemeral model)', info=True) }}
+        {{ log('⏭️  Model ' ~ resource_name ~ ': Skipped schema validation (ephemeral model)', info=True) }}
       {%- elif resource_type == 'model' -%}}
-        {{ log('❌ Model ' ~ result.table_name ~ ': Model not found in database (may not be built yet)', info=True) }}
+        {{ log('❌ Model ' ~ resource_name ~ ': Model not found in database (may not be built yet)', info=True) }}
       {%- else -%}
-        {{ log('❌ Source ' ~ result.table_name ~ ': Source not found in database', info=True) }}
+        {{ log('❌ Source ' ~ resource_name ~ ': Source not found in database', info=True) }}
       {%- endif -%}
     {%- elif result.validation_issues == ['UNDOCUMENTED_COLUMNS'] and not undocumented_columns_as_errors -%}
       {%- if not errors_only -%}
-        {{ log('✅ ' ~ resource_type | title ~ ' ' ~ result.table_name ~ ': Schema matches documentation', info=True) }}
+        {{ log('✅ ' ~ resource_type | title ~ ' ' ~ resource_name ~ ': Schema matches documentation', info=True) }}
         {{ log('   ⚠️  Undocumented columns (not treated as errors): ' ~ result.undocumented_columns | join(', '), info=True) }}
       {%- endif -%}
     {%- else -%}
-      {{ log('❌ ' ~ resource_type | title ~ ' ' ~ result.table_name ~ ':', info=True) }}
+      {{ log('❌ ' ~ resource_type | title ~ ' ' ~ resource_name ~ ':', info=True) }}
       {%- if 'DOCUMENTED_BUT_MISSING_COLUMNS' in result.validation_issues -%}
         {{ log('   • Documented but missing columns: ' ~ result.documented_but_missing_columns | join(', '), info=True) }}
       {%- endif -%}
