@@ -245,13 +245,13 @@
     {%- set resource_name = result.table_database ~ '.' ~ result.table_schema ~ '.' ~ result.table_name | upper -%}
 
     -- Check if this table has any error issues
-    {%- set has_errors = false -%}
+    {%- set ns = namespace(has_errors=false) -%}
     {%- for issue in result.validation_issues -%}
       {%- if issue in error_issues -%}
-        {%- if not has_errors -%}
+        {%- if not ns.has_errors -%}
           {% if result.materialized != 'ephemeral'%}
             {%- do failed_tables_list.append(result.table_name) -%}
-            {%- set has_errors = true -%}
+            {%- set ns.has_errors = true -%}
           {% endif %}
         {%- endif -%}
       {%- endif -%}
